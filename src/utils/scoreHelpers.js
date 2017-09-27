@@ -2,7 +2,7 @@
 const isGameEnded = (frameNum, rollNum, scoreCard) => {
   const rollTotal = scoreCard[scoreCard.length - 1].rolls.reduce((a, b) => a + b, 0);
   if (frameNum === 9) {
-    return (rollNum === 2 || (frameNum === 1 && rollTotal < 10))
+    return (rollNum === 2 || (rollNum === 1 && rollTotal < 10))
   } else {
     return false;
   }
