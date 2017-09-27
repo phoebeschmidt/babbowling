@@ -1,21 +1,20 @@
 
-const isGameEnded = (frameNum, rollNum, scoreCard) => {
-  const rollTotal = scoreCard[scoreCard.length - 1].rolls.reduce((a, b) => a + b, 0);
+function isGameEnded(frameNum, rollNum, frameTotal) {
   if (frameNum === 9) {
-    return (rollNum === 2 || (rollNum === 1 && rollTotal < 10))
+    return (rollNum > 2 || (rollNum === 2 && frameTotal < 10))
   } else {
     return false;
   }
 }
 
-const updateNewFrame = (frame, newScore) => {
+function updateNewFrame(frame, newScore) {
   frame.total += newScore;
   frame.frameTotal += newScore;
   frame.rolls.push(newScore);
   return frame;
 }
 
-const calculateFramesRolls = (rollNum, frameNum, remainingPins, newScore) => {
+function calculateFramesRolls(rollNum, frameNum, remainingPins, newScore, frameTotal) {
   if (rollNum === 0) {
     if (newScore === 10) { //if strike, go to next frame, keep 10 pins remaining
       frameNum++;
@@ -36,12 +35,18 @@ const calculateFramesRolls = (rollNum, frameNum, remainingPins, newScore) => {
   return {
     rollNum,
     frameNum,
-    remainingPins
+    remainingPins,
+    isGameEnded: isGameEnded(frameNum, rollNum, frameTotal)
   }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * (max + 1));
 }
 
 export {
   isGameEnded,
   updateNewFrame,
-  calculateFramesRolls
+  calculateFramesRolls,
+  getRandomInt
 }
