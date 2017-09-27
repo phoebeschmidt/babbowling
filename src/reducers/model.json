@@ -5,7 +5,7 @@
   "scoreCard": [ {
     "total": "0",
     "rolls": ["0"],
-    "completedScore": "false"
+    "frameTotal": "0"
     } ],
   "remainingPins": "0",
   "isGameEnded": "false"
