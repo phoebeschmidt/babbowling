@@ -1,53 +1,50 @@
-import { UPDATE_SCORE, START_NEW_GAME, END_GAME } from '../actions';
+import { START_NEW_GAME, BOWL } from '../actions';
 import { initialGameState } from '../index';
+import { isGameEnded, calculateFramesRolls, updateNewFrame } from '../utils/scoreHelpers'
 
 const scoreKeeper = (state, action) => {
   switch (action.type) {
+    case BOWL:
+      return bowl(state);
     case START_NEW_GAME:
-      return initialGameState;
-    case UPDATE_SCORE:
-      return updateScore(state, action.newScore);
-    case END_GAME:
-      return endGame(state);
+      return startNewGame();
     default:
       return state;
   }
 }
 
-const updateScore = (state, newScore) => {
-  const { frameNum, rollNum, scoreTotal, scoreCard, remainingPins } = state;
-  //if rollNum == 0, construct new score to append to scoreCard. then adjust other numbers accordingly
-  //if rollNum > 0, get the score obj from scoreCard array and update it. then adjust other numbers accordingly
-  if (rollNum === 0) {
-    var frameScore = {
-      total: scoreTotal + newScore,
-      rolls: [newScore]
-    }
-    scoreCard.push(frameScore);
-    //adjust other numbers
-    return {
-      frameNum,
-      rollNum: rollNum + 1,
-      scoreCard,
-      scoreTotal: scoreTotal + newScore, //this isnt quite right, depending on if it's a spare or a strike
-      remainingPins: 10 - newScore
-    }
-  } else {
-    var frameScore = scoreCard.pop();
-    frameScore.rolls.push(newScore);
-    frameScore.total += newScore;
-    return {
-      frameNum: frameNum + 1, //this isnt quite right
-      rollNum: 0, //this also isnt quite right. both depend on frame number and roll number
-      scoreCard: scoreCard.push(frameScore),
-      scoreTotal: scoreTotal + newScore,
-      remainingPins: 10 //same comment as above
-    }
-  }
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * (max + 1));
 }
 
-const endGame = (state) => {
+const bowl = (state) => {
+    const hitPins = getRandomInt(state.remainingPins);
+    console.log(hitPins, "pins knocked down!");
+    return updateScore(state, hitPins);
+}
 
+const updateScore = (state, newScore) => {
+  const { frameNum, rollNum, scoreTotal, remainingPins } = state;
+  const scoreCard = state.scoreCard.slice(0);
+
+  var newFrame = (rollNum === 0) ? {
+                                        total: scoreTotal,
+                                        frameTotal: 0,
+                                        rolls: []
+                                      }
+                                    : scoreCard.pop();
+
+  scoreCard.push(updateNewFrame(newFrame, newScore));
+
+  return Object.assign(calculateFramesRolls(rollNum, frameNum, remainingPins, newScore), {
+    scoreCard,
+    scoreTotal: scoreTotal + newScore,
+    isGameEnded: isGameEnded(frameNum, rollNum, scoreCard)
+  });
+}
+
+const startNewGame = () => {
+  return initialGameState;
 }
 
 export default scoreKeeper;

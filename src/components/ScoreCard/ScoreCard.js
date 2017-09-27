@@ -6,11 +6,12 @@ class ScoreCard extends Component {
   render() {
     var frames = []
     for (var i = 0; i < 10; i++) {
-      frames.push(<ScoreFrame />)
+      const score = (i < this.props.score.length) ? this.props.score[i] : {};
+      frames.push(<ScoreFrame key={i} score={score} />)
     }
     return (
       <div className="ScoreCard">
-      "I'm the scorecard!"
+      SCORE
         <div className="frames">
           {frames}
         </div>
