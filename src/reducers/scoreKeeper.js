@@ -1,6 +1,6 @@
 import { START_NEW_GAME, BOWL } from '../actions';
 import { initialGameState } from '../index';
-import { calculateFramesRolls, updateNewFrame, getRandomInt, updateScoreCard } from '../utils/scoreHelpers'
+import { calculateFramesRolls, updateNewFrame, getRandomInt, updateScoreCard, sumGameTotal } from '../utils/scoreHelpers'
 
 const scoreKeeper = (state, action) => {
   switch (action.type) {
@@ -20,20 +20,24 @@ const bowl = (state) => {
 }
 
 const updateScore = (state, newScore) => {
-  const { frameNum, rollNum, scoreTotal, remainingPins } = state;
+  const { frameNum, rollNum, remainingPins, scoreTotal } = state;
   const scoreCard = state.scoreCard.slice(0);
   var newFrame = (rollNum === 0) ? {
-                                        total: scoreTotal,
                                         frameTotal: 0,
-                                        rolls: []
+                                        rolls: [],
+                                        isStrike: false,
+                                        isSpare: false,
+                                        snapshotTotal: scoreTotal
                                       }
                                     : scoreCard.pop();
-  newFrame = updateNewFrame(newFrame, newScore);
+  newFrame = updateNewFrame(newFrame, newScore, scoreTotal);
   scoreCard.push(newFrame);
 
-  return Object.assign(calculateFramesRolls(rollNum, frameNum, remainingPins, newScore, newFrame.frameTotal), {
-    scoreCard: updateScoreCard(scoreCard),
-    scoreTotal: scoreTotal + newScore
+  const newScoreCard = updateScoreCard(scoreCard);
+  const newScoreTotal = sumGameTotal(newScoreCard);
+  return Object.assign(calculateFramesRolls(rollNum, frameNum, remainingPins, newScore, newFrame), {
+    scoreCard: newScoreCard,
+    scoreTotal: newScoreTotal
   });
 }
 

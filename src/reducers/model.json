@@ -3,9 +3,11 @@
   "rollNum": "0",
   "scoreTotal": "0",
   "scoreCard": [ {
-    "total": "0",
     "rolls": ["0"],
-    "frameTotal": "0"
+    "frameTotal": "0",
+    "snapshotTotal": "0",
+    "isStrike": "false",
+    "isSpare": "false"
     } ],
   "remainingPins": "0",
   "isGameEnded": "false"

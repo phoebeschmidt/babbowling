@@ -12,18 +12,28 @@ class ScoreFrame extends Component {
   }
 
   render() {
-    const rolls = ('rolls' in this.props.score) ? this.props.score.rolls : ["-","-"];
-    const total = ('total' in this.props.score) ? this.props.score.total : "-";
+    var total;
+    if (!this.isObjectEmpty(this.props.score)) {
+      if (this.props.score.isStrike) {
+        total = "X"
+      } else if (this.props.score.isSpare) {
+        total = "/"
+      } else {
+        total = this.props.score.snapshotTotal;
+      }
+    } else {
+      total = "--"
+    }
     return (
       <div className="ScoreFrame">
         <div className="topRow">
-          {rolls.join(" ")}
+          { this.props.score.rolls ? this.props.score.rolls.join(" ") : ["-", "-"].join(" ") }
         </div>
         <div className="totalScore">
-          {total}
+          { total }
         </div>
       </div>
-    );
+    )
   }
 }
 
