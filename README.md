@@ -8,21 +8,46 @@ You can find the most recent version of this guide [here](https://github.com/fac
 "You’ll need to have Node >= 4 on your machine.
 We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use nvm to easily switch Node versions between different projects.""
 1. `npm install`
-
--To start in dev mode: `npm start`
-The app should appear in your browser at `http://localhost:3000/` in development mode.
-
--To build 'production mode': `npm run build`
-
-then: `npm install -g serve` and `serve -s build`
-The console should provide some output telling you where the app is running.
+1. To start in dev mode: `npm start`. The app should appear in your browser at `http://localhost:3000/` in development mode. To build production mode, `npm run build`, then `npm install -g serve` and `serve -s build`. The console should provide some output telling you where the app is running.
 
 ## Structure
-`Index.js` is the entry point for the app. It defines the routes and initializes the redux data store
+`Index.js` is the entry point for the app. It initializes the redux data store and renders the Game component.
 
-<!-- `/utils` contains files with helper methods reused in many files. -->
+`/components` contains my react components, each in their own directory with accompanying tests and styles (where applicable).
 
-`/components` contains my react components, each in their own directory.
-<!-- A few components that need additional data, (`Catalog` and `ArticleDetail`) also have container components in their directory. In these cases, the container component fetches data and passes it to the presentation component. -->
+`/actions` and `/reducers` contain files that define actions and reducers for the `react-redux` store.
 
-`/actions` and `/reducers` contain files that define actions and reducers for the `react-redux` store
+## Improvements
+
+* I like to use a more sophisticated Redux pattern, with multiple reducers and more specific actions that mutate less of the state. For example, I'd like to handle the scoring for strikes/spares with smaller state changes vs. a method that recalculates the entire score card every turn
+
+* Finish implementing tests. I have covered most of the small helpers, but no component tests, and not the updateScore method. I'd like to use TDD with added features, as well. It would save me some bugs down the line :)
+
+## Process
+
+I prioritized:
+
+* Feature completion-- getting a successful scoring system down
+
+* Refactoring for readability and tests
+
+* Documentation
+
+## Incomplete/Next Steps (also ordered by priority):
+
+* Error handling
+** Although there is really no user input at this point, I would still like to implement some checking (ex: score should be possible considering pins)
+
+* Responsiveness
+** I used flexbox which gives a bit of responsiveness out of the box, but I would ideally spend more time making sure things work for all screen sizes
+
+* Added Features
+** Multiple users
+** Interactive UI where you have some influence over the bowling instead of clicking a button for random pins
+
+* Styling
+** There is a lot to be desired from the "look and feel" of Babbowling in its current implementation
+
+## Sources
+
+* I'm still quite new with Redux, so I used this blog to help get me started: https://onsen.io/blog/react-state-management-redux-store/
