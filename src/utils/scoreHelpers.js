@@ -15,12 +15,11 @@ function isGameEnded(frameNum, rollNum, frameTotal) {
   }
 }
 
-function updateNewFrame(frame, newScore, scoreTotal) {
+function updateNewFrame(frame, newScore) {
   frame.frameTotal += newScore;
   frame.rolls.push(newScore);
   frame.isSpare = isSpare(frame);
   frame.isStrike = isStrike(frame);
-  frame.snapshotTotal = frame.snapshotTotal + newScore;
   return frame;
 }
 
@@ -55,6 +54,9 @@ function sumGameTotal(scoreCard) {
 }
 
 /* Updates scorecard with additional points for frames that were strikes/spares */
+// FIXME: this recalculates the frameTotal for strike/spare frames every turn
+// I accepted this compromise because it's such a small array (max 10 items)
+// TODO: clean up this method it's super confusing
 function updateScoreCard(scoreCard) {
   scoreCard.forEach((frame, i, originalArray) => {
       if (frame.isStrike) {
@@ -63,14 +65,19 @@ function updateScoreCard(scoreCard) {
         while (j < 3) { //try to add two more rolls
           if (i + j < scoreCard.length) {
             var nextFrameRolls = originalArray[i+j].rolls;
-            newFrameTotal += sumArray(nextFrameRolls);
-            j += nextFrameRolls.length;
+            if (j === 1 && nextFrameRolls.length === 2) {
+              newFrameTotal += sumArray(nextFrameRolls);
+              j += nextFrameRolls.length;
+            } else {
+              newFrameTotal += nextFrameRolls[0];
+              j++;
+            }
           } else {
             j = 100;
             break;
           }
-          frame.frameTotal = newFrameTotal;
         }
+        frame.frameTotal = newFrameTotal;
       } else if (frame.isSpare) { //add one more roll
         if (i+1 < scoreCard.length) {
             frame.frameTotal = sumArray(frame.rolls) + originalArray[i+1].rolls[0];
@@ -99,5 +106,9 @@ export {
   calculateFramesRolls,
   getRandomInt,
   updateScoreCard,
-  sumGameTotal
+  sumGameTotal,
+  isGameEnded,
+  isStrike,
+  isSpare,
+  sumArray
 }

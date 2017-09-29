@@ -30,7 +30,7 @@ const updateScore = (state, newScore) => {
                                         snapshotTotal: scoreTotal
                                       }
                                     : scoreCard.pop();
-  newFrame = updateNewFrame(newFrame, newScore, scoreTotal);
+  newFrame = updateNewFrame(newFrame, newScore);
   scoreCard.push(newFrame);
 
   const newScoreCard = updateScoreCard(scoreCard);
