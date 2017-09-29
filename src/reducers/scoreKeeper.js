@@ -35,6 +35,7 @@ const updateScore = (state, newScore) => {
 
   const newScoreCard = updateScoreCard(scoreCard);
   const newScoreTotal = sumGameTotal(newScoreCard);
+  newScoreCard[newScoreCard.length - 1].snapshotTotal = newScoreTotal;
   return Object.assign(calculateFramesRolls(rollNum, frameNum, remainingPins, newScore, newFrame), {
     scoreCard: newScoreCard,
     scoreTotal: newScoreTotal

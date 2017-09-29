@@ -59,25 +59,21 @@ function updateScoreCard(scoreCard) {
   scoreCard.forEach((frame, i, originalArray) => {
       if (frame.isStrike) {
         var newFrameTotal = sumArray(frame.rolls);
-        var newSnapshotTotal = frame.snapshotTotal;
         var j = 1;
         while (j < 3) { //try to add two more rolls
           if (i + j < scoreCard.length) {
             var nextFrameRolls = originalArray[i+j].rolls;
             newFrameTotal += sumArray(nextFrameRolls);
-            newSnapshotTotal += sumArray(nextFrameRolls);
             j += nextFrameRolls.length;
           } else {
             j = 100;
             break;
           }
           frame.frameTotal = newFrameTotal;
-          frame.snapshotTotal = newSnapshotTotal;
         }
       } else if (frame.isSpare) { //add one more roll
         if (i+1 < scoreCard.length) {
             frame.frameTotal = sumArray(frame.rolls) + originalArray[i+1].rolls[0];
-            frame.snapshotTotal = frame.snapshotTotal + originalArray[i+1].rolls[0];
         }
       }
   })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import pin from '../../pin.png';
 import ScoreCard from '../ScoreCard/ScoreCard';
-import PlayCTA from '../PlayCTA/PlayCTA';
+import BowlButton from '../BowlButton/BowlButton';
 import NewGameCTA from '../NewGameCTA/NewGameCTA';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../utils/reduxHelper';
@@ -17,9 +17,12 @@ class Game extends Component {
           <h2>Welcome to Babbowling!</h2>
         </div>
         <ScoreCard score={this.props.game.scoreCard} />
-        <PlayCTA onClick={this.props.actions.bowl} isGameEnded={this.props.game.isGameEnded} />
+        <BowlButton onClick={this.props.actions.bowl} isGameEnded={this.props.game.isGameEnded} />
         <NewGameCTA onClick={this.props.actions.startNewGame} />
         {congratulationsNote}
+        <div className="Total Score">
+          Score: {this.props.game.scoreTotal}
+        </div>
       </div>
     );
   }
