@@ -1,4 +1,4 @@
-import { sumArray, calculateFramesRolls, updateNewFrame, getRandomInt, sumGameTotal, isGameEnded } from '../utils/scoreHelpers'
+import { updateFrame, isGameEnded } from '../utils/scoreHelpers'
 
 /* IsGameEnded tests */
 it("game lasts for 10 frames", () => {
@@ -34,7 +34,7 @@ it("returns an updated Frame object", () => {
   };
   const newScore = 8;
   const scoreTotal = 100;
-  const updatedFrame = updateNewFrame(frame, newScore, scoreTotal);
+  const updatedFrame = updateFrame(frame, newScore, scoreTotal);
   expect(updatedFrame.frameTotal).toEqual(frameTotal + newScore);
   expect(updatedFrame.rolls.length).toEqual(rolls.length + 1);
 })

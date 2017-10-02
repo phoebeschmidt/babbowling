@@ -16,6 +16,9 @@ The app should appear in your browser at `http://localhost:3000/` in development
 
 To build production mode, `npm run build`, then `npm install -g serve` (first time only) and `serve -s build`. The console should provide some output telling you where the app is running.
 
+1. To run tests: `npm test`
+
+
 ## Structure
 `Index.js` is the entry point for the app. It initializes the redux data store and renders the Game component.
 

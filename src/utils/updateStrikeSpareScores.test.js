@@ -1,4 +1,4 @@
-import { isStrike, isSpare, updateScoreCard, sumArray } from '../utils/scoreHelpers';
+import { isStrike, isSpare, updateStrikeSpareScores, sumArray } from '../utils/scoreHelpers';
 
 /* isStrike isSpare tests */
 const spareFrame = {
@@ -52,7 +52,7 @@ it("correctly identifies spare and does not falsely identify non spares", () => 
   expect(isSpare(invalidFrameRolls)).toEqual(false);
 })
 
-/* updateScoreCard Tests */
+/* updateStrikeSpareScores Tests */
 let strikeScoreCard = [
   Object.assign({}, nonSpareStrikeFrame),
   Object.assign({}, strikeFrame),
@@ -81,7 +81,7 @@ it("correctly updates a scoreCard when there are >=2 rolls after a strike", () =
   const oldScoreCard = strikeScoreCard.map((frame) => {
       return Object.assign({}, frame)
   });
-  const newScoreCard = updateScoreCard(strikeScoreCard);
+  const newScoreCard = updateStrikeSpareScores(strikeScoreCard);
   const updatedStrikeFrame = newScoreCard[1];
   const oldStrikeFrame = oldScoreCard[1];
   expect(updatedStrikeFrame.frameTotal).toEqual(oldStrikeFrame.frameTotal + sumArray(nonSpareStrikeFrame.rolls));
@@ -91,7 +91,7 @@ it("correctly updates a scoreCard when there are >=2 rolls over 2 frames after a
   const oldScoreCard = doubleStrikeScoreCard.map((frame) => {
       return Object.assign({}, frame)
   });
-  const newScoreCard = updateScoreCard(doubleStrikeScoreCard);
+  const newScoreCard = updateStrikeSpareScores(doubleStrikeScoreCard);
   const updatedStrikeFrame = newScoreCard[1];
   const oldStrikeFrame = oldScoreCard[1];
   expect(updatedStrikeFrame.frameTotal).toEqual(oldStrikeFrame.frameTotal + oldScoreCard[2].rolls[0] + oldScoreCard[3].rolls[0]);
@@ -101,7 +101,7 @@ it("correctly updates a scoreCard when there are >=1 rolls after a spare", () =>
   const oldScoreCard = spareScoreCard.map((frame) => {
       return Object.assign({}, frame)
   });
-  const newScoreCard = updateScoreCard(spareScoreCard);
+  const newScoreCard = updateStrikeSpareScores(spareScoreCard);
   const updatedSpareFrame = newScoreCard[1];
   const oldSpareFrame = oldScoreCard[1];
   expect(updatedSpareFrame.frameTotal).toEqual(oldSpareFrame.frameTotal + nonSpareStrikeFrame.rolls[0]);
@@ -111,7 +111,7 @@ it("does not update a spare frame when there are no rolls after", () => {
   const oldScoreCard = shortSpareScoreCard.map((frame) => {
       return Object.assign({}, frame)
   });
-  const newScoreCard = updateScoreCard(shortSpareScoreCard);
+  const newScoreCard = updateStrikeSpareScores(shortSpareScoreCard);
   const updatedSpareFrame = newScoreCard[1];
   const oldSpareFrame = oldScoreCard[1];
   expect(updatedSpareFrame.frameTotal).toEqual(oldSpareFrame.frameTotal);
