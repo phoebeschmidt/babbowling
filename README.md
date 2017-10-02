@@ -8,6 +8,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 "You’ll need to have Node >= 4 on your machine.
 We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use nvm to easily switch Node versions between different projects.""
 1. `npm install`
+1. To run tests, `npm test`
 1. To start in dev mode:
 
 `npm start`
@@ -15,8 +16,6 @@ We strongly recommend to use Node >= 6 and npm >= 3 for faster installation spee
 The app should appear in your browser at `http://localhost:3000/` in development mode.
 
 To build production mode, `npm run build`, then `npm install -g serve` (first time only) and `serve -s build`. The console should provide some output telling you where the app is running.
-
-1. To run tests: `npm test`
 
 
 ## Structure
@@ -47,21 +46,21 @@ I prioritized:
 
 * Error handling
 
-..* Although there is really no user input at this point, I would still like to implement some checking (ex: score should be possible considering pins)
+  * Although there is really no user input at this point, I would still like to implement some checking (ex: score should be possible considering pins)
 
 * Responsiveness
 
-..* I used flexbox which gives a bit of responsiveness out of the box, but I would ideally spend more time making sure things work for all screen sizes
+  * I used flexbox which gives a bit of responsiveness out of the box, but I would ideally spend more time making sure things work for all screen sizes
 
 * Added Features
 
-..* Multiple users
-..* Interactive UI where you have some influence over the bowling instead of clicking a button for random pins
-..* Remove logging of state to console in production mode
+  * Multiple users  
+  * Interactive UI where you have some influence over the bowling instead of clicking a button for random pins  
+  * Remove logging of state to console in production mode  
 
 * Styling
 
-..* There is a lot to be desired from the "look and feel" of Babbowling in its current implementation
+  * There is a lot to be desired from the "look and feel" of Babbowling in its current implementation
 
 ## Sources
 
