@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class NewGameCTA extends Component {
+class NewGameButton extends Component {
 
   render() {
     return (
@@ -11,4 +11,4 @@ class NewGameCTA extends Component {
   }
 }
 
-export default NewGameCTA;
+export default NewGameButton;
